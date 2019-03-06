@@ -1,0 +1,20 @@
+{
+  "name": "event",
+  "version": "1.0.0",
+  "description": "Theatre project 2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilene0413/events.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ilene0413/events/issues"
+  },
+  "homepage": "https://github.com/Ilene0413/events#readme"
+}
