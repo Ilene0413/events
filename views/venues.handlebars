@@ -71,11 +71,23 @@
                  <div class="col-md-2" id="saved">
                     <h1>Saved Shows</h1>
                     <div id="saved-purchased">
-         <!-- dynamic div put in here-->               
+         <!-- dynamic div put in here-->    
+                        {{#each event}}
+                            {{#if saved}}
+                            <div id="saved{{this.numPurchased}}">
+                                <div class="row">
+                                        <h4>{{this.venueId}}: {{this.eventId}}</h4>
+                                        <img class="theatrepics" value="{{this.vanue_value}}">
+                                        <a href="assets/images/{{this.venue_name}}" class="theatretext">
+                                    </a>
+                                </div>
+                            </div>
+                            {{/if}}
+                        {{/each}}         
                     </div>
                 </div>
             </div>
-            
+
 <script>
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap4'
