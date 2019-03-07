@@ -1,7 +1,8 @@
 {
-  "name": "event",
+
+  "name": "events",
   "version": "1.0.0",
-  "description": "Theatre project 2",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,10 +12,19 @@
     "type": "git",
     "url": "git+https://github.com/Ilene0413/events.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Ilene0413/events/issues"
   },
-  "homepage": "https://github.com/Ilene0413/events#readme"
+  "homepage": "https://github.com/Ilene0413/events#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "path": "^0.12.7",
+    "sequelize": "^4.43.0"
+ }
 }

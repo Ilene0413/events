@@ -1,37 +1,40 @@
 module.exports = function (sequelize, DataTypes) {
-  var Login = sequelize.define("Login", {
-    // Giving the Login model a name of type STRING
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
-    }
-  });
 
-  Login.associate = function (models) {
-    // Associating Login with Event
-    // When a Login is deleted, also delete any associated Excursions
-    Login.hasMany(models.Event, {
-      onDelete: "cascade"
+    var Login = sequelize.define("Customer", {
+        first: {
+            type: DataTypes.STRING,
+            // AllowNull is a flag that restricts a burger from being entered if it doesn't
+            // have a text value
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        last: {
+            type: DataTypes.STRING,
+            // AllowNull is a flag that restricts a burger from being entered if it doesn't
+            // have a text value
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        email: {
+            type: DataTypes.STRING,
+            // AllowNull is a flag that restricts a burger from being entered if it doesn't
+            // have a text value
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        venueId: DataTypes.INTEGER,
+        eventDate: DataTypes.DATE,
+        eventId: DataTypes.INTEGER,
+        saved: DataTypes.BOOLEAN,
+        purchased: DataTypes.BOOLEAN,
+        numPurchased: DataTypes.INTEGER
+
     });
-  }
-
-  return Login;
-
+    return Customer;
 };

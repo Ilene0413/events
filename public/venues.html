@@ -32,7 +32,7 @@
                     <h1>Theatres</h1>
                     <div id="theatreValues">
 
-                        <div id="theatre">
+                        <div id="theatre1">
                             <div class="row">
                                 <img class="theatrepics" value="9">
                                 <a href="" class="theatretext">
@@ -40,15 +40,15 @@
                                 </a>
                             </div>
                         </div>
-                        <div id="theatre">
-                            <div class="row">
-                                <img class="theatrepics" value="25">
-                                <a href="" class="theatretext">
-                                    <h4> St.Matins Theatre</h4>
-                                </a>
+                        <div class="row">
+                            <div id="theatre2" class="theatrepics">
+                                <img value="25">
+                                <div class="theatretext">
+                                    <h4> St.Martins Theatre</h4>
+                                </div>
                             </div>
                         </div>
-                        <div id="theatre">
+                        <div id="theatre3">
                             <div class="row">
                                 <img class="theatrepics" value="75">
                                 <a href="" class="theatretext">
@@ -56,7 +56,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div id="theatre">
+                        <div id="theatre4">
                             <div class="row">
                                 <img class="theatrepics" value="61">
                                 <a href="" class="theatretext">
@@ -64,7 +64,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div id="theatre">
+                        <div id="theatre5">
                             <div class="row">
                                 <img class="theatrepics" value="13">
                                 <a href="" class="theatretext">
@@ -76,7 +76,10 @@
                 </div>
                 <div class="col-md-5" id="selected">
                     <h1>Selected Theatre Shows</h1>
-                    <div class="form-group">
+                    <div id="theaterinfo">
+                     <!-- put in description or select a venue -->   
+                    </div>
+    <!--                <div class="form-group">
                         <button type="save">Save</button>
                         <button type="purchase">Purchase</button>
                         <br>
@@ -87,9 +90,12 @@
                         <label class="control-label" for="date">Date</label>
                         <input id="datepicker" width="276" />
                     </div>
-                </div>
+                </div>-->
                 <div class="col-md-2" id="saved">
                     <h1>Saved Shows</h1>
+                    <div id="saved-purchased">
+         <!-- dynamic div put in here-->               
+                    </div>
                 </div>
             </div>
             <div class="row footer">
@@ -105,7 +111,7 @@
             uiLibrary: 'bootstrap4'
         });
     </script>
-    <script src="assets/js/excursions.js"> </script>
+    <script src="assets/js/events.js"> </script>
 
 </body>
 
