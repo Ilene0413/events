@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "events_db",
+    "database": "login",
     "host": "127.0.0.1",
     "port": 3306,
     "dialect": "mysql"
