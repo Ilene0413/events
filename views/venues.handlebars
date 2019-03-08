@@ -1,5 +1,9 @@
+
+
+
   
         <div class="jumbotron">
+
             <div class="containter"> 
                 <div class="row carousel">
                     <div class="col-md-4" id="venues">
@@ -18,7 +22,11 @@
                             <div id="theatre2" class="theatrepics">
                                 <img value="25">
                                   <a href="assets/images/St. Matins Theatre.PNG" class="theatretext"></a>
+
+                                    <h4> St.Martins Theatre</h4>
+
                                     <h4> St. Martin's Theatre</h4>
+
                                 </div>
                             </div>
                         </div>
@@ -52,6 +60,19 @@
                                 <h1>Selected Theatre Shows</h1>
                                 <div id="theaterinfo">
                                 <div class="form-group">
+
+                                    <button type="save">Save</button>
+                                    <button type="purchase">Purchase</button>
+                                    <br>
+                                    <select class="form-control" id="exampleFormControlSelect1" >
+                                            <option selected># of people</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+
                                     <button id="save">Save</button>
                                     <button id="purchase" >Purchase</button>
                                     <br>
@@ -63,6 +84,7 @@
                                             <option value="4">4</option>
                                             <option value="5">5</option>
                                             <option value="6">6</option>
+
                                     </select>
                                     <input id="datepicker" width="276" placeholder="Select date">
                                     </div>
@@ -71,6 +93,13 @@
                  <div class="col-md-2" id="saved">
                     <h1>Saved Shows</h1>
                     <div id="saved-purchased">
+
+         <!-- dynamic div put in here-->               
+                    </div>
+                </div>
+            </div>
+            
+
          <!-- dynamic div put in here-->    
                         {{#each event}}
                             {{#if saved}}
@@ -88,9 +117,13 @@
                 </div>
             </div>
 
+
 <script>
         $('#datepicker').datepicker({
             uiLibrary: 'bootstrap4'
         });
 </script>
+
+
+
 
