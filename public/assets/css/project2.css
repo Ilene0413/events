@@ -1,0 +1,64 @@
+.carousel-innerimg {
+    width: 500px;
+    height: 506px;
+    border-radius: 20px;
+    border: solid;
+  }
+
+.jumbotron {
+    margin-top: -20px;
+
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: -1;
+    right: 0;
+    background-color:rgb(137, 241, 245);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+.navbar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    background-color: rgb(137, 241, 245);
+    color: white;
+    text-align: center;
+}
+
+.rowSignin {
+    margin-top: 50px;
+}
+
+#selected {
+    border-right: solid;
+}
+
+#theatre {
+    background-color: rgb(209, 206, 181);
+    border-radius: 20px;
+    margin-bottom: 10px;
+    border: solid;
+}
+
+.theatrepics {
+    width: 200px;
+    height: 150px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border: solid;
+}
+
+.theatretext {
+    margin-left: 10px;
+}
+
+#venues {
+    border-right: solid;
+}
+

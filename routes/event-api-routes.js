@@ -43,15 +43,15 @@ module.exports = function (app) {
 
   // Get route for retrieving details of a single venue
   app.get("/api/event/:venueId", function (req, res) {
-    console.log("get: venueId: " + req.params.id);
-    var URL = "https://api.londontheatredirect.com/rest/v2/Venues/" + req.params.id;
+    console.log("get: venueId: " + req.params.venueId);
+    var URL = "https://api.londontheatredirect.com/rest/v2/Venues/" + req.params.venueId;
     axios
       .get(URL, {
         headers: { 'apiKey': api_key }
       })
       .then(function (eventResponse) {
-        console.log("venue name = " + eventResponse.data.Venues.name);
-        res.json(eventResponse.data.Venues);
+        console.log("venue name = " + eventResponse.data.Venue.Name);
+        res.json(eventResponse.data.Venue);
       })
       .catch(function (error) {
         if (error.response) {
