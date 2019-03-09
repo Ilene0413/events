@@ -1,0 +1,129 @@
+
+
+
+  
+        <div class="jumbotron">
+
+            <div class="containter"> 
+                <div class="row carousel">
+                    <div class="col-md-4" id="venues">
+                                <h1>Theatres</h1>
+                                <div id="theatreValues">
+
+                        <div id="theatre1">
+                            <div class="row">
+                                <img class="theatrepics" value="9">
+                                <a href="assets/images/Lyceum Theatre.jpg" class="theatretext">
+                                    <h4> Lyceum Theatre </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="theatre2" class="theatrepics">
+                                <img value="25">
+                                  <a href="assets/images/St. Matins Theatre.PNG" class="theatretext"></a>
+
+                                    <h4> St.Martins Theatre</h4>
+
+                                    <h4> St. Martin's Theatre</h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="theatre3">
+                            <div class="row">
+                                <img class="theatrepics" value="75">
+                                <a href="assets/images/Shakespear's Globe.PNG" class="theatretext">
+                                    <h4> Shakespeare's Globe </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="theatre4">
+                            <div class="row">
+                                <img class="theatrepics" value="61">
+                                <a href="assets/images/NationalTheatre.PNG" class="theatretext">
+                                    <h4> National Theatre </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="theatre5">
+                            <div class="row">
+                                <img class="theatrepics" value="13">
+                                <a href="assets/images/Majesty'sTheatre.png" class="theatretext">
+                                    <h4> Majesty's Theatre </h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-5" id="selected">
+                                <h1>Selected Theatre Shows</h1>
+                                <div id="theaterinfo">
+                                <div class="form-group">
+
+                                    <button type="save">Save</button>
+                                    <button type="purchase">Purchase</button>
+                                    <br>
+                                    <select class="form-control" id="exampleFormControlSelect1" >
+                                            <option selected># of people</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+
+                                    <button id="save">Save</button>
+                                    <button id="purchase" >Purchase</button>
+                                    <br>
+                                    <select class="form-control" id="people" >
+                                            <option selected># of people</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+
+                                    </select>
+                                    <input id="datepicker" width="276" placeholder="Select date">
+                                    </div>
+                                    </div>
+                                </div>
+                 <div class="col-md-2" id="saved">
+                    <h1>Saved Shows</h1>
+                    <div id="saved-purchased">
+
+         <!-- dynamic div put in here-->               
+                    </div>
+                </div>
+            </div>
+            
+
+         <!-- dynamic div put in here-->    
+                        {{#each event}}
+                            {{#if saved}}
+                            <div id="saved{{this.numPurchased}}">
+                                <div class="row">
+                                        <h4>{{this.venueId}}: {{this.eventId}}</h4>
+                                        <img class="theatrepics" value="{{this.vanue_value}}">
+                                        <a href="assets/images/{{this.venue_name}}" class="theatretext">
+                                    </a>
+                                </div>
+                            </div>
+                            {{/if}}
+                        {{/each}}         
+                    </div>
+                </div>
+            </div>
+
+
+<script>
+        $('#datepicker').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+</script>
+
+
+
+
