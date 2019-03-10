@@ -46,6 +46,7 @@ module.exports = function (app) {
             console.log("total venue = " + venueResponse.data.Venues.length);
             var responseArray = formulateResponse(eventResponse.data.Events, venueResponse.data.Venues);
             res.json(responseArray);
+            //res.render("name of html file", responseArray);
           })
           .catch(function (error) {
             if (error.response) {
@@ -84,8 +85,40 @@ module.exports = function (app) {
       });
   });
 
+// Get route for retrieving details of a single event
+app.get("/api/event/:eventId", function (req, res) {
+  console.log("get: eventId: " + req.params.eventId);
+  var URL = "https://api.londontheatredirect.com/rest/v2/Events/" + req.params.eventId;
+  axios
+    .get(URL, {
+      headers: { 'apiKey': api_key }
+    })
+    .then(function (eventResponse) {
+      console.log("event name = " + eventResponse.data.Event.Name);
+      res.json(eventResponse.data.Event);
+      //res.render("name of html file", eventResponse.data.Event);
+    })
+    .catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an object that comes back with details pertaining to the error that occurred.
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+      }
+      console.log(error.config);
+    });
+});
+
   // Get route for retrieving details of a single venue
-  app.get("/api/event/:venueId", function (req, res) {
+  app.get("/api/event/venue/:venueId", function (req, res) {
     console.log("get: venueId: " + req.params.venueId);
     var URL = "https://api.londontheatredirect.com/rest/v2/Venues/" + req.params.venueId;
     axios
@@ -95,6 +128,7 @@ module.exports = function (app) {
       .then(function (eventResponse) {
         console.log("venue name = " + eventResponse.data.Venue.Name);
         res.json(eventResponse.data.Venue);
+        //res.render("name of html file", eventResponse.data.Venue);
       })
       .catch(function (error) {
         if (error.response) {

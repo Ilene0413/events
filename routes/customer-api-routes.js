@@ -5,6 +5,7 @@ module.exports = function (app) {
   app.get("/api/customer", function (req, res) {
     db.Customer.findAll({}).then(function (dbCustomer) {
       res.json(dbCustomer);
+      //res.render("name of html file", dbCustomer);
     });
   });
 
@@ -17,6 +18,7 @@ module.exports = function (app) {
       }
     }).then(function (dbCustomer) {
       res.json(dbCustomer);
+      //res.render("name of html file", dbCustomer);
     });
   });
 
