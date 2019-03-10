@@ -1,3 +1,4 @@
+
 .carousel-innerimg {
     width: 500px;
     height: 506px;
@@ -5,9 +6,27 @@
     border: solid;
   }
 
+#curtains {
+    z-index: 10;
+}
+
+#email {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
+.input-group-text {
+    border-radius: 100px;
+}
+
 .jumbotron {
     margin-top: -20px;
+    background-color: white;
+}
 
+#first {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
 }
 
 .footer {
@@ -15,50 +34,113 @@
     left: 0;
     bottom: -1;
     right: 0;
-    background-color:rgb(137, 241, 245);
-    color: white;
+    background-color: rgb(244, 247, 242);
+    color: rgb(94, 180, 127);
     text-align: center;
     padding: 1rem;
 }
+
+h6 {
+    color: rgb(94, 180, 127);
+}
+
+#last {
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
 
 .navbar {
     position: fixed;
     right: 0;
     top: 0;
     width: 100%;
-    background-color: rgb(137, 241, 245);
-    color: white;
-    text-align: center;
+    background-color: rgb(244, 247, 242);
+    color: rgb(94, 180, 127);
+    
+}
+
+.navbar-brand {
+    margin-left: 240px;
+}
+
+#people {
+    width: 200px;
+}
+
+#purchase {
+    margin: 15px;
+    border-radius: 100px;
 }
 
 .rowSignin {
     margin-top: 50px;
 }
 
+#save {
+    margin: 15px;
+    border-radius: 100px;
+}
+
+#saved {
+    text-align: center;
+}
+
 #selected {
     border-right: solid;
+    text-align: center;
+}
+
+#search {
+    border-radius: 100px;
 }
 
 #theatre {
-    background-color: rgb(209, 206, 181);
+    background-color: rgb(58, 58, 56);
     border-radius: 20px;
     margin-bottom: 10px;
-    border: solid;
+   
+    -webkit-animation: slideInLeft 1s;
+    animation: slideInLeft 1s;
+    
+}
+
+#theatre:hover {
+    -webkit-animation: pulse 1s;
+    animation: pulse 1s;
+}
+
+.theatre {
+    background-color: rgb(58, 58, 56);
+    border-radius: 20px;
+    margin-bottom: 10px;
+    
+}
+
+.theatre:hover {
+    -webkit-animation: pulse 0.5s;
+    animation: pulse 0.5s;
 }
 
 .theatrepics {
     width: 200px;
-    height: 150px;
+    height: 145px;
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
     border: solid;
 }
 
 .theatretext {
-    margin-left: 10px;
+    padding: 60px;
+    color: white;
+}
+
+.theatretext:hover {
+    color: white;
 }
 
 #venues {
     border-right: solid;
+    text-align: center;
 }
 
