@@ -1,7 +1,12 @@
 
 
 let state = {
-    validform: true
+    validform: true,
+    customer: {
+        first_name: "",
+        last_name: "",
+        email: "",
+    }
 };
 
 $(document).ready(function () {
@@ -11,14 +16,13 @@ $(document).ready(function () {
         // Make sure to preventDefault on a submit event.
         event.preventDefault();
 
-        let customer = {
-            first_name: $("#first").val().trim(),
-            last_name: $("#last").val().trim(),
-            email: $("#email").val().trim(),
-        };
-        // validate that all information was entered
-        console.log(`first name ${customer.first_name}, ${customer.last_name}, email ${customer.email}`)
-        validateUser(customer);
+        state.customer.first_name = $("#first").val().trim(),
+        state.customer.last_name = $("#last").val().trim(),
+        state.customer.email = $("#email").val().trim(),
+
+            // validate that all information was entered
+            console.log(`first name ${state.customer.first_name}, ${state.customer.last_name}, email ${state.customer.email}`)
+        validateUser(state.customer);
 
         //if entries are valid - send get request to api/login to get user information
         //api/login should return a json file with the excursions saved and purchased by the user
@@ -26,37 +30,63 @@ $(document).ready(function () {
         if (!state.validform) {
             return;
         }
-        eventsPage(customer);
+        eventsPage(state.customer);
     });
-    $("#eventInfo").on("click", ".eventPics", function () {
-        event.preventDefault();
-        console.log(`in event`);
-        // get value of theater clicked to determine which theater to get additional info for using venue id number
-        //send info to server to retrieve using longdon theater api
-        // let theaterValue = $(this).data("value");
-        console.log($(this));
-        let eventValue = $(this).children('img').attr("value");
-        console.log(`theater value ${eventValue}`);
-        //put in code to server to get description of theater
-    });
+    // $("#eventInfo").on("click", ".eventPics", function () {
+    //     event.preventDefault();
+    //     console.log(`in event`);
+    //     // get value of theater clicked to determine which theater to get additional info for using venue id number
+    //     //send info to server to retrieve using longdon theater api
+    //     // let theaterValue = $(this).data("value");
+    //     console.log($(this));
+    //     let eventValue = $(this).children('img').attr("value");
+    //     console.log(`theater value ${eventValue}`);
+    //     //put in code to server to get description of theater
+    // });
 
 
     //following code is for when the saved button is selected
-    $("#saved").on("click", function (event) {
+    $("#eventInfo").on("click", "#saved", function (event) {
+        event.preventDefault();
+
         console.log(`in save button`);
-        //    let id = $(this).children('id').attr("");
-        let id = $("#eventNum").val().trim();
-        console.log(`eventnumber ${id}`);
-        postFavorite(id, saved);
+        let formatEventDate = $("#datepicker").val();
+
+        let customerEvent = {
+            first: state.customer.first_name,
+            last: state.customer.last_name,
+            email: state.customer.email,
+            venueId: 1,
+            eventDate:moment(formatEventDate).format(),
+            eventId: $("#eventNum").val(),
+            saved: true,
+            purchased: false,
+            numPurchased: $("#people").val(),
+        }
+        console.log(`saved ${JSON.stringify(customerEvent)}`);
+        postFavorite(customerEvent);
     });
 
     //following code is for when the purchased button is selected
-    $("#purchased").on("click", function (event) {
+    $("#eventInfo").on("click", "#purchased", function (event) {
+        event.preventDefault();
+
         console.log(`in purchase button`);
         //        let id = $(this).data("id");
-        let id = $("#eventNum").val().trim();
-        let purchased = true;
-        postFavorite(id, purchased);
+        let formatEventDate = $("#datepicker").val();
+        let customerEvent = {
+            first: state.customer.first_name,
+            last: state.customer.last_name,
+            email: state.customer.email,
+            venueId: 1,
+            eventDate: moment(formatEventDate).format(),
+            eventId: $("#eventNum").val(),
+            saved: false,
+            purchased: true,
+            numPurchased: $("#people").val(),
+        }
+
+        postFavorite(customerEvent);
     });
 });
 
@@ -78,11 +108,10 @@ function eventsPage(customerData) {
     $.ajax(`/api/event/`, {
         type: "GET"
     }).then(function (response) {
-        console.log(`obtained event info`);
-        console.log(JSON.stringify(response));
+        console.log(response[0]);
+        console.log(`response data ${response[0].event.MainImageUrl}`)
+        console.log(response[0].event.SmallImageUrl);
         renderEventsPage(response, customerData);
-        //    renderEventInfo();
-        //  getCustomerInfo(customerData);
     })
         .catch(function (error) {
             console.log(`error getting event info ${error}`);
@@ -103,23 +132,17 @@ function renderEventsPage(eventInfo, customerData) {
             </thead>
             <tbody>
                 <tr>
-                   
-                        
-`;
+        `;
 
     let eventClose = `</tr></tbody></table>`
     let eventData = `<td><div id="eventData">`
+    console.log(`in redner events page ${eventInfo[0].event.MainImageUrl}`);
     if (eventInfo.length > 0) {
         for (let i = 0; i < eventInfo.length; i++) {
             let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
             let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
-            let picture = "https://media.londontheatredirect.com/Event/TheLionKing/event-list-image_15037.jpg";
-            let eventPicture = `<img src="${picture}" value="${eventInfo[i].event.EventId}">`;
-            //         let eventPicture = $(`<img src="${eventInfo[i].event.MainImageUrl}>"`);
-            console.log(`event ${JSON.stringify(event)}, description ${JSON.stringify(description)}`);
-            //        console.log(`event picture ${JSON.stringify(eventPicture)}`)
+            let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
             eventData += event + eventPicture + description
-            // eventDiv.append(eventPicture).append(event).append(description)
         };
 
         eventData += '</div></td>';
@@ -133,9 +156,6 @@ function renderEventsPage(eventInfo, customerData) {
             <div>
                 <form>
                     <div class="form-group">
-                        <button class="btn btn-lg btn-primary" id="saved">Save</button>
-                        <button class="btn btn-lg btn-primary" id="purchased" >Purchase</button>
-                        <br><br>
                         <input id="eventNum" placeholder="Enter event number" type="number" min="1">
                         <br>
                         <select class="form-control" id="people" >
@@ -149,6 +169,9 @@ function renderEventsPage(eventInfo, customerData) {
                         </select>
                         <br>
                         <input id="datepicker" width="276" placeholder="Select date">
+                        <br><br>
+                        <button class="btn btn-lg btn-primary" id="saved">Save</button>
+                        <button class="btn btn-lg btn-primary" id="purchased">Purchase</button>
                     </div>
                 </form>
             </div>
@@ -170,6 +193,7 @@ function renderEventsPage(eventInfo, customerData) {
     }).then(function (response) {
         // reload page with theaters available and saved/purchased events
         // may need to render or else use handlebars
+        console.log(JSON.stringify(response));
         renderCustInfo(response);
     })
         .catch(function (error) {
@@ -178,34 +202,56 @@ function renderEventsPage(eventInfo, customerData) {
 
 }
 
-function renderCustInfo(customerInfo) {
-    //    let customerDiv = $(`<td>
-    let customerDiv = `<div id="saved-purchased">`;
-    // check that the customer has saved or purchased events
-    if (customerInfo.length > 0) {
-        for (let i = 0; i < customerInfo.length; i++) {
-            let venue = `<p>${customerInfo[i].venueId}</p>`;
-            let eventDate = `<p>${customerInfo[i].eventDate}</p>`;
-            customerDiv += venue + eventDate;
+function renderCustInfo(customerInfo, prepend=false) {
+    // console.log(`in render customer ${customerInfo.venueId}`);
+    // $.ajax(`/api/event/${customerInfo.venueId}`, {
+    //     type: "GET",
+    // }).then(function (response) {
+        let customerDiv = `<div id="saved-purchased">`;
+        // check that the customer has saved or purchased events
+        let venue, eventDate;
+        if (customerInfo.length > 0) {
+            for (let i = 0; i < customerInfo.length; i++) {
+//                let venue = `<p>${customerInfo[i].venueId}</p>`;
+                venue = `<p>${customerInfo[i].venueId}</p>`;
+                eventDate = `<p>${moment(customerInfo[i].eventDate).format("LL")}</p>`;
+                customerDiv += venue + eventDate;
+            };
+            customerDiv += '</div>';
         };
-        customerDiv += '</div>';
-    };
-    $("#customerInfo").html(customerDiv);
+        if (prepend) {
+            $("#saved-purchased").prepend(venue + eventDate);
+        } else {
+            $("#customerInfo").html(customerDiv);
+        }
+    
+    // })
+    //     .catch(function (error) {
+    //         console.log(`error getting customer info ${error}`);
+    //     });
+
+
 
 }
-function postFavorite(id, favorite) {
-    let postData = {
-        id: id,
-        favorite: favorite
-    };
-    // Send the PUT request.
+function postFavorite(customerEvent) {
+    // let postData = {
+    //     eventid: customerEvent.eventId,
+    //     numPeople: customerEvent.numPeople,
+    //     eventDate: customerEvent.eventDate,
+    //     favorite: customerEvent.favorite
+    // };
+
+    // Send the POST request.
+    console.log(`post favorite ${JSON.stringify(customerEvent)}`);
+
     $.ajax("/api/customer", {
-        type: "PUT",
-        data: postData
+        type: "POST",
+        data: customerEvent
     }).then(
-        function () {
+        function (response) {
             // Reload the page to get the updated list
-            location.reload();
+            console.log(`in post favorite`, response);
+            renderCustInfo([response], true)
         }
     )
         .catch(function (error) {
