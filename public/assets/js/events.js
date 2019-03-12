@@ -110,37 +110,84 @@ function eventsPage(customerData) {
 
 function renderEventsPage(eventInfo, customerData) {
     // start by formatting table and column with events
+    // let eventDiv = `
+    //     <table class="table">
+    //         <thead>
+    //             <tr>
+    //                 <th scope="col">Event</th>
+    //                 <th scope="col">Select Events</th>
+    //                 <th scope="col">Saved Events</th>
+    //             </tr>
+    //         </thead>
+    //         <tbody>
+    //             <tr>
+    //     `;
+
+    // let eventClose = `</tr></tbody></table>`;
+    // let eventData = `<td><div id="eventData">`;
+    // if (eventInfo.length > 0) {
+    //     for (let i = 0; i < eventInfo.length; i++) {
+    //         let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
+    //         let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
+    //         let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
+    //         eventData += event + eventPicture + description
+    //     };
+
+    //     eventData += '</div></td>';
+    //     eventDiv += eventData;
+    // };
     let eventDiv = `
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Event</th>
-                    <th scope="col">Select Events</th>
-                    <th scope="col">Saved Events</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-        `;
-
-    let eventClose = `</tr></tbody></table>`;
-    let eventData = `<td><div id="eventData">`;
+    <div >
+    <ul class="list-group">
+    `;
+    let eventClose = '</ul>'
+    let panes = '<div class="tab-content">'
+    let eventData = '<li class="list-group-item list-group-flush" role="tablist">'
     if (eventInfo.length > 0) {
-        for (let i = 0; i < eventInfo.length; i++) {
-            let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
-            let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
-            let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
-            eventData += event + eventPicture + description
-        };
 
-        eventData += '</div></td>';
+        let bottle = '<div class="d-flex w-100 justify-content-between">'
+        let bottlecap = '</div>'
+        let closer = '</a>'
+        for (let i = 0; i < eventInfo.length; i++) {
+
+            let opener = `<a  
+            class="list-group-item list-group-item-action flex-column align-items-start" 
+            id="list-${[eventInfo[i].event.EventId]}-list"
+            data-toggle="list"
+            href"#list-${[eventInfo[i].event.EventId]}"
+            role="tab"
+            aria-controls="${[eventInfo[i].event.EventId]}" 
+            data-anijs="if: click, do: $toggleClass invisible">`
+
+            let event = `<h5 class"mb-1">${eventInfo[i].event.Name}</h5>`;
+
+            let eId = `<span class="badge badge-info">${[eventInfo[i].event.EventId]}</span>`
+
+            let poster = eventInfo[i].event.MainImageUrl
+
+            let eventPicture = `<img src="${poster}" height="250" value="${eventInfo[i].event.EventId}">`;
+
+            let description = `<p> ${eventInfo[i].event.TagLine}</p> <br>`;
+
+            let paneTab = `<div 
+            class="tab-pane fade" 
+            id="list-${[eventInfo[i].event.EventId]}" 
+            role="tabpanel" 
+            aria-labelledby="list-${[eventInfo[i].event.EventId]}-list">
+            <p>${eventInfo[i].event.Description}</p>
+            </div>`
+
+            eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
+            panes += paneTab
+        };
+        panes += closer
+        eventData += '</li>'
         eventDiv += eventData;
     };
-
+    eventDiv += eventClose;
     //format column 2
 
     let col2Div = `
-        <td>
             <div>
                 <form name="customerForm">
                     <div class="form-group">
@@ -165,14 +212,27 @@ function renderEventsPage(eventInfo, customerData) {
                     </div>
                 </form>
             </div>
-        </td>
-        <td id="customerInfo"></td>
         `;
-    eventDiv += col2Div + eventClose;
+    //eventDiv += col2Div + eventClose;
+
+    let pageHead = `
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div id="showListings" class="col-6">Event</div>
+                    <div id="userWindow" class="col-4">Select Events</div>
+                    <div id="customerInfo"class="col-2">Saved Events</div>
+                </div>
+            </div>
+        </div>
+      `;
+
     $(".rowSignin").empty();
     $(".rowCarousel").empty();
-    $("#eventInfo").html(eventDiv);
-
+    $("#eventInfo").html(pageHead);
+    $("#userWindow").append(col2Div);
+    $("#userWindow").append(panes);
+    $("#showListings").append(eventDiv);
 
     //this function will load the events a user has already saved or purchased 
     $.ajax(`/api/customer/${customerData.email}`, {
