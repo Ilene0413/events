@@ -17,6 +17,7 @@ module.exports = function (app) {
         email: req.params.email
       }
     }).then(function (dbCustomer) {
+      console.log(`dbcustomer after get by email`, dbCustomer);
       res.json(dbCustomer);
       //res.render("name of html file", dbCustomer);
     });
