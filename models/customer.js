@@ -26,11 +26,17 @@ module.exports = function (sequelize, DataTypes) {
         venueId: {
             type: DataTypes.INTEGER
         },
+        venueName: {
+            type: DataTypes.STRING
+        },
         eventDate: {
             type: DataTypes.DATE
         },
         eventId: {
             type :DataTypes.INTEGER
+        },
+        eventName: {
+            type: DataTypes.STRING
         },
         saved: {
             type: DataTypes.BOOLEAN

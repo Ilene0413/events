@@ -1,11 +1,11 @@
 
-
 .carousel-innerimg {
     width: 500px;
     height: 506px;
     border-radius: 20px;
     border: solid;
   }
+
 
 .carousel {
     position: relative;
@@ -54,9 +54,6 @@
 .input-group-text {
     border-radius: 100px;
 }
-
-
-
 
 #first {
     border-top-right-radius: 100px;
@@ -123,6 +120,15 @@ h6 {
     text-align: center;
 }
 
+#save {
+    margin: 15px;
+    border-radius: 100px;
+}
+
+#saved {
+    text-align: center;
+}
+
 #selected {
     border-right: solid;
     text-align: center;
@@ -166,6 +172,7 @@ td {
     border-left: solid;
     text-align: center;
     color: rgb(94, 180, 127);
+
 }
 
 #theatre {
