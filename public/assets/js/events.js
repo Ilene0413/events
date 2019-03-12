@@ -1,5 +1,7 @@
 let state = {
     validform: true,
+    msg: "",
+    dateError:"",
     customer: {
         first_name: "",
         last_name: "",
@@ -15,8 +17,8 @@ $(document).ready(function () {
         event.preventDefault();
 
         state.customer.first_name = $("#first").val().trim(),
-        state.customer.last_name = $("#last").val().trim(),
-        state.customer.email = $("#email").val().trim(),
+            state.customer.last_name = $("#last").val().trim(),
+            state.customer.email = $("#email").val().trim(),
 
             // validate that all information was entered
             validateUser(state.customer);
@@ -36,7 +38,7 @@ $(document).ready(function () {
 
         console.log(`in save button`);
         let formatEventDate = $("#datepicker").val();
-       
+
 
         let customerEvent = {
             first: state.customer.first_name,
@@ -63,9 +65,6 @@ $(document).ready(function () {
 
         console.log(`in purchase button`);
         let formatEventDate = $("#datepicker").val();
-        // if (formatEventDate == "Invalid date") {
-        //     return;
-        // };
         let customerEvent = {
             first: state.customer.first_name,
             last: state.customer.last_name,
@@ -130,7 +129,7 @@ function renderEventsPage(eventInfo, customerData) {
         for (let i = 0; i < eventInfo.length; i++) {
             let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
             let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
-          let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
+            let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
             eventData += event + eventPicture + description
         };
 
@@ -143,12 +142,13 @@ function renderEventsPage(eventInfo, customerData) {
     let col2Div = `
         <td>
             <div>
-                <form>
+                <form name="customerForm">
                     <div class="form-group">
                         <input id="eventNum" placeholder="Enter event number" type="number" min="1">
+                        <div id="errorMsg">${state.msg}</div>
                         <br>
                         <select class="form-control" id="people" >
-                            <option selected># of people</option>
+                            <option value=" "># of people</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -157,7 +157,8 @@ function renderEventsPage(eventInfo, customerData) {
                             <option value="6">6</option>
                         </select>
                         <br>
-                        <input id="datepicker" width="276" placeholder="Select date">
+                        <input type="date" id="datepicker" width="276" placeholder="Select date" required>
+                        <div id="dateError">${state.dateError}</div>
                         <br><br>
                         <button class="btn btn-lg btn-primary" id="saved">Save</button>
                         <button class="btn btn-lg btn-primary" id="purchased">Purchase</button>
@@ -169,6 +170,7 @@ function renderEventsPage(eventInfo, customerData) {
         `;
     eventDiv += col2Div + eventClose;
     $(".rowSignin").empty();
+    $(".rowCarousel").empty();
     $("#eventInfo").html(eventDiv);
 
 
@@ -230,11 +232,30 @@ function postFavorite(customerEvent) {
         type: "GET"
     }).then(function (response) {
         console.log(`in event details ${JSON.stringify(response)}`);
-        customerEvent.eventName = response.Name;
-        postData(customerEvent);
+        if (response === 404) {
+            state.msg = "invalid event entered";
+        }
+        else {
+            state.msg = "";
+            customerEvent.eventName = response.Name;
+            postData(customerEvent);
+        };
+        // customerEvent.eventName = response.Name;
+        // postData(customerEvent);
+
     })
         .catch(function (error) {
-            console.log(`error getting event info ${error}`);
+            console.log(`error getting event info ${JSON.stringify(error)}`);
+            if (error.status === 404) {
+                state.msg = "invalid event entered";
+                $("#errorMsg").append(state.msg);
+            }
+            else {
+                state.msg = "";
+                customerEvent.eventName = response.Name;
+                postData(customerEvent);
+            };
+
         });
 }
 
