@@ -1,7 +1,7 @@
 let state = {
     validform: true,
     msg: "",
-    dateError: "",
+    dateError:"",
     customer: {
         first_name: "",
         last_name: "",
@@ -149,6 +149,7 @@ function renderEventsPage(eventInfo, customerData) {
         let bottlecap = '</div>'
         let closer = '</a>'
         for (let i = 0; i < eventInfo.length; i++) {
+
             let opener = `<a  
             class="list-group-item list-group-item-action flex-column align-items-start" 
             id="list-${[eventInfo[i].event.EventId]}-list"
@@ -232,8 +233,6 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(col2Div);
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
-
-
 
     //this function will load the events a user has already saved or purchased 
     $.ajax(`/api/customer/${customerData.email}`, {
