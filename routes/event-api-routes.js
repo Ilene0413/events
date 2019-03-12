@@ -185,6 +185,7 @@ module.exports = function (app) {
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
+          res.send(404);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an object that comes back with details pertaining to the error that occurred.
