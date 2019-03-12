@@ -2,6 +2,7 @@ let state = {
     validform: true,
     msg: "",
     dateError:"",
+    peopleError:"",
     customer: {
         first_name: "",
         last_name: "",
@@ -37,9 +38,27 @@ $(document).ready(function () {
         event.preventDefault();
 
         console.log(`in save button`);
+
         let formatEventDate = $("#datepicker").val();
+        let customerDate   = moment(formatEventDate, 'YYYY-MM-DD', true);
+        let isValid = customerDate.isValid();
+        if (!isValid) {
+            state.dateError = "please enter date";
+            $("#dateError").append(state.dateError);
+            return;
+        }
+        else{
+            state.dateError = "";
+        };
 
-
+        if (!isValid) {
+            state.dateError = "please enter date";
+            $("#dateError").append(state.dateError);
+            return;
+        }
+        else{
+            state.dateError = "";
+        };
         let customerEvent = {
             first: state.customer.first_name,
             last: state.customer.last_name,
@@ -63,8 +82,31 @@ $(document).ready(function () {
     $("#eventInfo").on("click", "#purchased", function (event) {
         event.preventDefault();
 
-        console.log(`in purchase button`);
+        
+//check that a valid date has been entered
         let formatEventDate = $("#datepicker").val();
+        let customerDate   = moment(formatEventDate, 'YYYY-MM-DD', true);
+        let isValid = customerDate.isValid();
+        if (!isValid) {
+            state.dateError = "please enter date";
+            $("#dateError").append(state.dateError);
+            return;
+        }
+        else{
+            state.dateError = "";
+        };
+
+// check that a ticket is being purchased for at least one person
+console.log(`number of people ${$("#people").val()}`);
+        if ($("#people").val() === " ") {
+            state.peopleError = "Please enter number of tickets to purchase"
+            $("#peopleError").append(state.peopleError);
+            return;
+        }
+        else {
+            state.peopleError = "";
+        };
+        
         let customerEvent = {
             first: state.customer.first_name,
             last: state.customer.last_name,
@@ -147,7 +189,7 @@ function renderEventsPage(eventInfo, customerData) {
                         <input id="eventNum" placeholder="Enter event number" type="number" min="1">
                         <div id="errorMsg">${state.msg}</div>
                         <br>
-                        <select class="form-control" id="people" >
+                        <select class="form-control" id="people">
                             <option value=" "># of people</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -156,6 +198,7 @@ function renderEventsPage(eventInfo, customerData) {
                             <option value="5">5</option>
                             <option value="6">6</option>
                         </select>
+                        <div id="peopleError">${state.peopleError}</div>
                         <br>
                         <input type="date" id="datepicker" width="276" placeholder="Select date" required>
                         <div id="dateError">${state.dateError}</div>
@@ -216,7 +259,7 @@ function renderCustInfo(customerInfo, prepend) {
         $("#saved-purchased").prepend(eventName + eventDate + numPeople + sp);
         $("#datepicker").val("");
         $("#eventNum").val("");
-        $("#people").val("");
+        $("#people").val(" ");
 
     } else {
         $("#customerInfo").html(customerDiv);
@@ -262,7 +305,10 @@ function postFavorite(customerEvent) {
 function postData(customerEvent) {
     console.log(`in post favorites ${customerEvent.eventName}`);
     // Send the POST request.
-    console.log(`post favorite ${JSON.stringify(customerEvent)}`);
+
+    // clear out error messages 
+    $("#dateError").empty();
+    $("#peopleError").empty();
 
     $.ajax("/api/customer", {
         type: "POST",
