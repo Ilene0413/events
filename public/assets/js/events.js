@@ -1,8 +1,8 @@
 let state = {
     validform: true,
     msg: "",
-    dateError:"",
-    peopleError:"",
+    dateError: "",
+    peopleError: "",
     customer: {
         first_name: "",
         last_name: "",
@@ -40,14 +40,14 @@ $(document).ready(function () {
         console.log(`in save button`);
 
         let formatEventDate = $("#datepicker").val();
-        let customerDate   = moment(formatEventDate, 'YYYY-MM-DD', true);
+        let customerDate = moment(formatEventDate, 'YYYY-MM-DD', true);
         let isValid = customerDate.isValid();
         if (!isValid) {
             state.dateError = "please enter date";
             $("#dateError").append(state.dateError);
             return;
         }
-        else{
+        else {
             state.dateError = "";
         };
 
@@ -56,7 +56,7 @@ $(document).ready(function () {
             $("#dateError").append(state.dateError);
             return;
         }
-        else{
+        else {
             state.dateError = "";
         };
         let customerEvent = {
@@ -82,22 +82,22 @@ $(document).ready(function () {
     $("#eventInfo").on("click", "#purchased", function (event) {
         event.preventDefault();
 
-        
-//check that a valid date has been entered
+
+        //check that a valid date has been entered
         let formatEventDate = $("#datepicker").val();
-        let customerDate   = moment(formatEventDate, 'YYYY-MM-DD', true);
+        let customerDate = moment(formatEventDate, 'YYYY-MM-DD', true);
         let isValid = customerDate.isValid();
         if (!isValid) {
             state.dateError = "please enter date";
             $("#dateError").append(state.dateError);
             return;
         }
-        else{
+        else {
             state.dateError = "";
         };
 
-// check that a ticket is being purchased for at least one person
-console.log(`number of people ${$("#people").val()}`);
+        // check that a ticket is being purchased for at least one person
+        console.log(`number of people ${$("#people").val()}`);
         if ($("#people").val() === " ") {
             state.peopleError = "Please enter number of tickets to purchase"
             $("#peopleError").append(state.peopleError);
@@ -106,7 +106,7 @@ console.log(`number of people ${$("#people").val()}`);
         else {
             state.peopleError = "";
         };
-        
+
         let customerEvent = {
             first: state.customer.first_name,
             last: state.customer.last_name,
@@ -196,12 +196,12 @@ function renderEventsPage(eventInfo, customerData) {
             class="list-group-item list-group-item-action flex-column align-items-start" 
             id="list-${[eventInfo[i].event.EventId]}-list"
             data-toggle="list"
-            href"#list-${[eventInfo[i].event.EventId]}"
+            href="#list-${[eventInfo[i].event.EventId]}"
             role="tab"
             aria-controls="${[eventInfo[i].event.EventId]}" 
             data-anijs="if: click, do: $toggleClass invisible">`
 
-            let event = `<h5 class"mb-1">${eventInfo[i].event.Name}</h5>`;
+            let event = `<h5 class="mb-1">${eventInfo[i].event.Name}</h5>`;
 
             let eId = `<span class="badge badge-info">${[eventInfo[i].event.EventId]}</span>`
 
@@ -216,7 +216,7 @@ function renderEventsPage(eventInfo, customerData) {
             id="list-${[eventInfo[i].event.EventId]}" 
             role="tabpanel" 
             aria-labelledby="list-${[eventInfo[i].event.EventId]}-list">
-            <p>${eventInfo[i].event.Description}</p>
+            <small>${eventInfo[i].event.Description}</small>
             </div>`
 
             eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
@@ -262,9 +262,15 @@ function renderEventsPage(eventInfo, customerData) {
         <div class="jumbotron">
             <div class="container">
                 <div class="row">
-                    <div id="showListings" class="col-6">Event</div>
-                    <div id="userWindow" class="col-4">Select Events</div>
-                    <div id="customerInfo"class="col-2">Saved Events</div>
+                    <div class="col-6">
+                        <div id="showListings">Event</div>
+                    </div>
+                    <div class="col-4">
+                        <div id="userWindow">Select Events</div>
+                    </div>
+                    <div class="col-2">
+                        <div id="customerInfo"class="col-2">Saved Events</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,7 +282,7 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(col2Div);
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
-
+    $("#userWindow, #customerInfo").stick_in_parent();
     //this function will load the events a user has already saved or purchased 
     $.ajax(`/api/customer/${customerData.email}`, {
         type: "GET",
