@@ -47,7 +47,7 @@ $(document).ready(function () {
             $("#dateError").append(state.dateError);
             return;
         }
-
+      
         else {
 
             state.dateError = "";
@@ -135,7 +135,7 @@ $(document).ready(function () {
         console.log(`in delete button`);
         //get customer id
 
-        let id = $(this).attr("value");
+        let id= $(this).attr("value");
         let custEmail = $(this).attr("custEmail");
         console.log(`id ${id} email ${custEmail}`);
         deleteSavedEvent(id, custEmail);
@@ -147,7 +147,7 @@ $(document).ready(function () {
 
         console.log(`in delete button`);
         //get customer id
-        let id = $(this).attr("value");
+        let id= $(this).attr("value");
         let custEmail = $(this).attr("custEmail");
         console.log(`id ${id} email ${custEmail}`);
         purchaseEvent(id, custEmail);
@@ -233,7 +233,7 @@ function renderEventsPage(eventInfo, customerData) {
 
             let event = `<h5 class="mb-1 showTitle">${eventInfo[i].event.Name}</h5>`;
 
-            let eId = `<h5 class="badge badge-info badge-pill">${[eventInfo[i].event.EventId]}</h5>`
+            let eId = `<h5>${[eventInfo[i].event.EventId]}</h5>`
 
             let poster = eventInfo[i].event.MainImageUrl
 
@@ -252,7 +252,7 @@ function renderEventsPage(eventInfo, customerData) {
             eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
             panes += paneTab
         };
-        panes += closer + bottlecap
+        panes += closer +bottlecap
         eventData += '</li>'
         eventDiv += eventData;
     };
@@ -317,14 +317,14 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(col2Div);
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
-    $("#userWindow, #customerInfo, #p-frame").stick_in_parent({ recalc_every: 1 });
+    $("#userWindow, #customerInfo, #p-frame").stick_in_parent({recalc_every: 1});
 
 }
-//this function will load the events a user has already saved or purchased 
+    //this function will load the events a user has already saved or purchased 
 
 function getCustomerInfo(custEmail) {
     console.log(`get customerInfo`, custEmail);
-    console.log(`/api/customer/${custEmail}`);
+   console.log( `/api/customer/${custEmail}`);
     $.ajax(`/api/customer/${custEmail}`, {
         type: "GET",
         data: custEmail
@@ -351,43 +351,50 @@ function renderCustInfo(customerInfo, prepend) {
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
 
+//                let sp = `<small>Saved</small>`;
+//                let numPeople = "";
+//             }
+//            else {
+//                 let = sp = `<small>Purchased</small>`;
+//                 numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
+// 
+//             };
+//             eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
+//             venueName = `<small>${customerInfo[i].venueName}</small>`;
+//             eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
 
-                //             customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
+//             customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
 
-                sp = `<small>Saved</small>`;
+                sp = `<p>Saved</p>`;
                 console.log(`customer id ${customerInfo[i].id}`);
                 console.log(`customer id ${customerInfo[i].email}`);
 
                 numPeople = "";
-                customerButton = `<button class="btn btn-sm btn-info" id="purchasedBtn" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}>Purchase</button> <br>
-                <br><button class="btn btn-sm btn-info" id="deletedButton" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}">Remove</button>`;
+                customerButton = `<button class="btn btn-md btn-info" id="purchasedBtn" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}>Purchase</button> 
+                <button class="btn btn-md btn-info" id="deletedButton" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}">Remove</button>`;
 
             }
             else {
-                sp = sp = `<small>Purchased</small>`;
-                if (customerInfo[i].numPurchased < 2) {
-                    numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Ticket</small><br>`;
-                }else{
-                    numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
-                }
+                sp = sp = `<p>Purchased</p>`;
+                numPeople = `<p>${customerInfo[i].numPurchased} People</p>`;
                 customerButton = "";
             };
-            eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
-            venueName = `<small>${customerInfo[i].venueName}</small>`;
-            eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
-            customerDiv += cardtop + eventName + eventDate + sp + numPeople + venueName + customerButton + `</div></div>`; 
+            eventName = `<p>${customerInfo[i].eventName}</p>`;
+            venueName = `<p>${customerInfo[i].venueName}</p>`;
+            eventDate = `<p>${moment(customerInfo[i].eventDate).format("LL")}</p>`;
+            customerDiv += sp + eventName + venueName + eventDate + numPeople + customerButton;
 
         };
         customerDiv += '</div>';
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-        let cardtop = '<div class="card" style="width: 150px;"><div class="card-body">'
-        //JohnM
-        //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+
+      //JohnM
+       //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
 
 
-        $("#saved-purchased").prepend(cardtop + eventName + eventDate + sp + numPeople + venueName + customerButton + `</div></div>`);
+        $("#saved-purchased").prepend(sp + eventName + venueName + eventDate + numPeople + customerButton);
         $("#datepicker").val("");
         $("#eventNum").val("");
         $("#people").val(" ");
@@ -467,7 +474,7 @@ function deleteSavedEvent(id, custEmail) {
         .catch(function (error) {
             console.log(`error getting customer info ${error}`);
         });
-
+ 
 }
 //this function will update the database if a user wants to purchase a saved item
 function purchaseEvent(id, custEmail) {
@@ -481,6 +488,6 @@ function purchaseEvent(id, custEmail) {
         .catch(function (error) {
             console.log(`error getting customer info ${error}`);
         });
-
+  
 
 }
