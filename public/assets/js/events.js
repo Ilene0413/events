@@ -388,8 +388,10 @@ function renderCustInfo(customerInfo, prepend) {
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-//JohnM
+
+      //JohnM
        //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+
 
         $("#saved-purchased").prepend(sp + eventName + venueName + eventDate + numPeople + customerButton);
         $("#datepicker").val("");
