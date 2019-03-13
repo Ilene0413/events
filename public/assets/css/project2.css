@@ -61,15 +61,16 @@
 }
 
 .footer {
-    position: relative;
+    position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -1;
     right: 0;
     background-color: rgb(244, 247, 242);
     color: rgb(94, 180, 127);
     text-align: center;
-    padding: 1rem;
+  
     z-index: 10;
+    line-height: 60px;
 }
 
 h6 {
