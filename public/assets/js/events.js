@@ -350,19 +350,19 @@ function renderCustInfo(customerInfo, prepend) {
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
 
-//           /      let sp = `<small>Saved</small>`;
-//           /      let numPeople = "";
-//           /  }
-//            / else {
-//           /      let = sp = `<small>Purchased</small>`;
-//           /      numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
-// /
-//           /  };
-//           /  eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
-//           /  venueName = `<small>${customerInfo[i].venueName}</small>`;
-//           /  eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
+//                let sp = `<small>Saved</small>`;
+//                let numPeople = "";
+//             }
+//            else {
+//                 let = sp = `<small>Purchased</small>`;
+//                 numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
+// 
+//             };
+//             eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
+//             venueName = `<small>${customerInfo[i].venueName}</small>`;
+//             eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
 
-//            / customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
+//             customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
 
                 sp = `<p>Saved</p>`;
                 console.log(`customer id ${customerInfo[i].id}`);
@@ -388,7 +388,10 @@ function renderCustInfo(customerInfo, prepend) {
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
- 
+
+      //JohnM
+       //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+
 
         $("#saved-purchased").prepend(sp + eventName + venueName + eventDate + numPeople + customerButton);
         $("#datepicker").val("");
