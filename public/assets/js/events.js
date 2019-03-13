@@ -289,7 +289,7 @@ function renderEventsPage(eventInfo, customerData) {
     //eventDiv += col2Div + eventClose;
 
     let pageHead = `
-        <div class="jumbotron">
+        <div class="jumbotron" id="newpic">
             <div class="container">
                 <div class="row">
                     <div class="col-6" id="showListingsParent">
