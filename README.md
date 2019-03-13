@@ -27,5 +27,5 @@ The app will validate all input data
 The database is only updated if a user saves or purchases events
 
 Pictures were taken from images doing google search and come from many different websites.
-Developed by Ilene Cohen, Mukti Pancholi, Joe, and John.
-email: ilene413@icloud.com, joecerankowski@gmail.com, mspancholi@gmail.com
+Developed by Ilene Cohen, Mukti Pancholi, Joe, and John Maguire.
+email: ilene413@icloud.com, joecerankowski@gmail.com, mspancholi@gmail.com, Tibirius@Gmail.com
