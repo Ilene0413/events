@@ -1,5 +1,4 @@
-
-# events
+﻿# events
 
 **London Theatre Plus**
 The app does the following:
@@ -19,7 +18,16 @@ The app does the following:
     Sticky-Kit
 
 **Signing into account**
-Asks for first, last, and email address
-Checks in the database to see if you are a user
-Main page loads dynamically 
-Takes user to next screen – Main Page
+The app asks for the user's first name, last name, and email address
+It then checks the database to see if the user has any saved or purchased events and then takes the user to the events page
+Events are retrieved from the London Theatre Direct API.
+The events page will load dynamically and display the events along with the user's purchased and saved events
+The user can scroll the list of events and click on any of them to get a full description of the event
+The user has the option of saving an event as a favorite or purchasing tickets to the event. The user would enter the event number
+along with the number of tickets to purchase and the date they want to attend
+The app will validate all input data
+The database is only updated if a user saves or purchases events
+
+Pictures were taken from images doing google search and come from many different websites.
+Developed by Ilene Cohen, Mukti, Joe, and John.
+email: ilene413@icloud.com, joecerankowski@gmail.com

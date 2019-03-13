@@ -1,4 +1,8 @@
 
+.body {
+    max-height: 700px;
+}
+
 .carousel-innerimg {
     width: 500px;
     height: 506px;
@@ -73,8 +77,8 @@
     line-height: 60px;
 }
 
-h1 {
-    font-size: 100px;
+#header {
+    font-size: 50px;
 }
 
 h6 {
@@ -145,7 +149,7 @@ h6 {
 }
 
 #newpic {
-    /* background-image: url("../img/theatre4.jpg"); */
+    background-color: rgb(230, 141, 141);
     background-repeat: no-repeat;
     min-height: 730px;
     z-index: 5;
