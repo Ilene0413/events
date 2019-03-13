@@ -35,6 +35,9 @@
     background-color: rgb(216, 67, 41);
 }
 
+.btn-sm {
+    border-radius: 25px
+}
 .carousel-innerimg {
     width: 500px;
     height: 506px;

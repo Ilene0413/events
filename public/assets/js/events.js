@@ -242,7 +242,7 @@ function renderEventsPage(eventInfo, customerData) {
 
             let eventPicture = `<img src="${poster}" height="250" value="${eventInfo[i].event.EventId}">`;
 
-            let description = `<p> ${eventInfo[i].event.TagLine}</p> <br>`;
+            let description = `<div class="mb-1"><p> ${eventInfo[i].event.TagLine}</p> <br></div>`;
 
             let paneTab = `<div 
             class="tab-pane fade" 
@@ -256,7 +256,7 @@ function renderEventsPage(eventInfo, customerData) {
             eventData += opener + bottle + event + bottlecap + eventPicture + closer + description
             panes += paneTab
         };
-        panes += closer + bottlecap
+        panes += bottlecap + bottlecap
         eventData += '</li>'
         eventDiv += eventData;
     };
@@ -268,7 +268,7 @@ function renderEventsPage(eventInfo, customerData) {
                         // <div id="errorMsg">${state.msg}</div>
                         // <br></br>
     let col2Div = `
-            <div>
+            <div id="formWindow">
                 <form name="customerForm">
                     <div class="form-group">
                         <select class="form-control" id="people">
@@ -285,8 +285,8 @@ function renderEventsPage(eventInfo, customerData) {
                         <input type="date" id="datepicker" width="276" placeholder="Select date" required>
                         <div id="dateError">${state.dateError}</div>
                         <br><br>
-                        <button class="btn btn-lg btn-primary" id="saved">Save</button>
-                        <button class="btn btn-lg btn-primary" id="purchased">Purchase</button>
+                        <button class="btn btn-sm btn-primary" id="saved">Save</button>
+                        <button class="btn btn-sm btn-primary" id="purchased">Purchase</button>
                     </div>
                 </form>
             </div>
@@ -320,7 +320,7 @@ function renderEventsPage(eventInfo, customerData) {
 
     $("#eventInfo").html(pageHead);
     $("#userWindow").append(col2Div);
-    $("#userWindow").append(panes);
+    $("#formWindow").append(panes);
     $("#showListings").append(eventDiv);
     $("#showListings, #userWindow, #customerInfo, #p-frame").stick_in_parent();
 
@@ -352,7 +352,7 @@ function renderCustInfo(customerInfo, prepend) {
     console.log(customerInfo)
     let sp, venueName, eventName, eventDate, numPeople, customerButton;
     if (customerInfo.length > 0) {
-        let cardtop = '<div class="card" style="width: 180px;"><div class="card-body">'
+        let cardtop = '<div class="card mb-1" style="width: 180px;"><div class="card-body">'
 
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
@@ -362,7 +362,7 @@ function renderCustInfo(customerInfo, prepend) {
                 console.log(`customer id ${customerInfo[i].email}`);
 
                 numPeople = "";
-                customerButton = `<button class="btn btn-sm btn-info" id="purchasedBtn" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}>Purchase</button> <br>
+                customerButton = `<br><button class="btn btn-sm btn-info" id="purchasedBtn" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}>Purchase</button><br>
                 <br><button class="btn btn-sm btn-info" id="deletedButton" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}">Remove</button>`;
 
             }
@@ -385,7 +385,7 @@ function renderCustInfo(customerInfo, prepend) {
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-        let cardtop = '<div class="card" style="width: 180px;"><div class="card-body">'
+        let cardtop = '<div class="card mb-1" style="width: 180px;"><div class="card-body">'
         //JohnM
         //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
 
