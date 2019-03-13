@@ -318,6 +318,7 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
     $("#userWindow, #customerInfo, #p-frame").stick_in_parent({recalc_every: 1});
+
 }
     //this function will load the events a user has already saved or purchased 
 
@@ -336,7 +337,7 @@ function getCustomerInfo(custEmail) {
         console.log(`error getting customer info ${error}`);
     });
 
-    
+
 }
 //This function renders the customers saved and purchased items
 
@@ -452,7 +453,6 @@ function postData(customerEvent) {
         function (response) {
             // Reload the page to get the updated list
             let prepend = true;
-            state.customerEvents.push(response);
             renderCustInfo([response], prepend);
         })
         .catch(function (error) {
