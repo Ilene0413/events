@@ -1,6 +1,7 @@
 
 .body {
     max-height: 700px;
+    background-color: rgb(216, 67, 41);
 }
 
 .carousel-innerimg {
@@ -28,7 +29,7 @@
     z-index: 7 !important;
     top: -0px;
     left: 0px;
-    width: 1483px;
+    width: 1500px;
     height: 736px;
     
 }
@@ -67,12 +68,11 @@
 .footer {
     position: absolute;
     left: 0;
-    bottom: -1;
+    bottom: 0;
     right: 0;
-    background-color: rgb(244, 247, 242);
-    color: rgb(94, 180, 127);
+    background-color: rgb(216, 67, 41);
+    color: white;
     text-align: center;
-  
     z-index: 10;
     line-height: 60px;
 }
@@ -97,13 +97,20 @@ h6 {
     right: 0;
     top: 0;
     width: 100%;
-    background-color: rgb(244, 247, 242);
-    color: rgb(94, 180, 127);
+    background-color: rgb(216, 67, 41);
+    color:white;
     
 }
 
 .navbar-brand {
     margin-left: 240px;
+}
+
+#newpic {
+    background-color: rgb(230, 141, 141);
+    background-repeat: no-repeat;
+    min-height: 760px;
+    z-index: 5;
 }
 
 #people {
@@ -148,12 +155,7 @@ h6 {
     border-radius: 100px;
 }
 
-#newpic {
-    background-color: rgb(230, 141, 141);
-    background-repeat: no-repeat;
-    min-height: 730px;
-    z-index: 5;
-}
+
 
 td {
     max-width: 100px;
