@@ -7,12 +7,12 @@ let state = {
         first_name: "",
         last_name: "",
         email: "",
-    }
+    },
 };
 
 $(document).ready(function () {
     console.log(`document ready`);
-    // following code is obtainin user information when submit button is clicked
+    // following code is obtaining user information when submit button is clicked
     $(".rowSignin").on("submit", function (event) {
         // Make sure to preventDefault on a submit event.
         event.preventDefault();
@@ -46,8 +46,10 @@ $(document).ready(function () {
             state.dateError = "please enter date";
             $("#dateError").append(state.dateError);
             return;
-        }
+        };
+      
         else {
+
             state.dateError = "";
         };
 
@@ -68,8 +70,8 @@ $(document).ready(function () {
             eventDate: moment(formatEventDate).format(),
             eventId: $("#eventNum").val(),
             eventName: "",
-            saved: false,
-            purchased: true,
+            saved: true,
+            purchased: false,
             numPurchased: $("#people").val(),
         }
 
@@ -83,6 +85,7 @@ $(document).ready(function () {
         event.preventDefault();
 
 
+
         //check that a valid date has been entered
         let formatEventDate = $("#datepicker").val();
         let customerDate = moment(formatEventDate, 'YYYY-MM-DD', true);
@@ -92,12 +95,14 @@ $(document).ready(function () {
             $("#dateError").append(state.dateError);
             return;
         }
+
         else {
             state.dateError = "";
         };
 
         // check that a ticket is being purchased for at least one person
         console.log(`number of people ${$("#people").val()}`);
+
         if ($("#people").val() === " ") {
             state.peopleError = "Please enter number of tickets to purchase"
             $("#peopleError").append(state.peopleError);
@@ -129,10 +134,23 @@ $(document).ready(function () {
 
         console.log(`in delete button`);
         //get customer id
-        let id = $(this).attr("value");
 
-        console.log(`id ${id}`);
-        deleteSavedEvent(id);
+        let id= $(this).attr("value");
+        let custEmail = $(this).attr("custEmail");
+        console.log(`id ${id} email ${custEmail}`);
+        deleteSavedEvent(id, custEmail);
+    });
+
+    //this code is run when the customer wants to purchase a saved item
+    $("#eventInfo").on("click", "#purchasedBtn", function (event) {
+        event.preventDefault();
+
+        console.log(`in delete button`);
+        //get customer id
+        let id= $(this).attr("value");
+        let custEmail = $(this).attr("custEmail");
+        console.log(`id ${id} email ${custEmail}`);
+        purchaseEvent(id, custEmail);
     });
 });
 
@@ -290,18 +308,28 @@ function renderEventsPage(eventInfo, customerData) {
 
     $(".rowSignin").empty();
     $(".rowCarousel").empty();
+
+    //$("#eventInfo").html(eventDiv);
+    getCustomerInfo(customerData.email);
+
+
     $("#eventInfo").html(pageHead);
     $("#userWindow").append(col2Div);
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
 
+}
     //this function will load the events a user has already saved or purchased 
 
-    $.ajax(`/api/customer/${customerData.email}`, {
+function getCustomerInfo(custEmail) {
+    console.log(`get customerInfo`, custEmail);
+   console.log( `/api/customer/${custEmail}`);
+    $.ajax(`/api/customer/${custEmail}`, {
         type: "GET",
-        data: customerData
+        data: custEmail
     }).then(function (response) {
         // reload page with theaters available and saved/purchased events
+        console.log(`back from get customer info`, response);
         let prepend = false;
         renderCustInfo(response, prepend);
     }).catch(function (error) {
@@ -310,35 +338,60 @@ function renderEventsPage(eventInfo, customerData) {
 
     $("#userWindow, #customerInfo, #p-frame").stick_in_parent({recalc_every: 1});
 }
+//This function renders the customers saved and purchased items
 
 function renderCustInfo(customerInfo, prepend) {
     let customerDiv = `<div id="saved-purchased">`;
     // check that the customer has saved or purchased events
-    let venueName, eventName, eventDate;
+    let sp, venueName, eventName, eventDate, numPeople, customerButton;
     if (customerInfo.length > 0) {
         let cardtop = '<div class="card" style="width: 150px;"><div class="card-body">'
 
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
-                let sp = `<small>Saved</small>`;
-                let numPeople = "";
+
+          /      let sp = `<small>Saved</small>`;
+          /      let numPeople = "";
+          /  }
+           / else {
+          /      let = sp = `<small>Purchased</small>`;
+          /      numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
+/
+          /  };
+          /  eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
+          /  venueName = `<small>${customerInfo[i].venueName}</small>`;
+          /  eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
+
+           / customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
+
+                sp = `<p>Saved</p>`;
+                console.log(`customer id ${customerInfo[i].id}`);
+                console.log(`customer id ${customerInfo[i].email}`);
+
+                numPeople = "";
+                customerButton = `<button class="btn btn-md btn-info" id="purchasedBtn" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}>Purchase</button> 
+                <button class="btn btn-md btn-info" id="deletedButton" value="${customerInfo[i].id}" custEmail=${customerInfo[i].email}">Remove</button>`;
+
             }
             else {
-                let = sp = `<small>Purchased</small>`;
-                numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
-
+                sp = sp = `<p>Purchased</p>`;
+                numPeople = `<p>${customerInfo[i].numPurchased} People</p>`;
+                customerButton = "";
             };
-            eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
-            venueName = `<small>${customerInfo[i].venueName}</small>`;
-            eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
+            eventName = `<p>${customerInfo[i].eventName}</p>`;
+            venueName = `<p>${customerInfo[i].venueName}</p>`;
+            eventDate = `<p>${moment(customerInfo[i].eventDate).format("LL")}</p>`;
+            customerDiv += sp + eventName + venueName + eventDate + numPeople + customerButton;
 
-            customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
         };
         customerDiv += '</div>';
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-        $("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+ /JohnM
+        /$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+
+        $("#saved-purchased").prepend(sp + eventName + venueName + eventDate + numPeople + customerButton);
         $("#datepicker").val("");
         $("#eventNum").val("");
         $("#people").val(" ");
@@ -365,8 +418,6 @@ function postFavorite(customerEvent) {
             customerEvent.eventName = response.Name;
             postData(customerEvent);
         };
-        // customerEvent.eventName = response.Name;
-        // postData(customerEvent);
 
     })
         .catch(function (error) {
@@ -383,7 +434,7 @@ function postFavorite(customerEvent) {
 
         });
 }
-
+// This function posts data to the database
 function postData(customerEvent) {
     console.log(`in post favorites ${customerEvent.eventName}`);
     // Send the POST request.
@@ -398,8 +449,8 @@ function postData(customerEvent) {
     }).then(
         function (response) {
             // Reload the page to get the updated list
-            console.log(`in post favorite`, response);
             let prepend = true;
+            state.customerEvents.push(response);
             renderCustInfo([response], prepend);
         })
         .catch(function (error) {
@@ -409,17 +460,32 @@ function postData(customerEvent) {
 
 }
 
-function deleteSavedEvent(id) {
+//this function deletes items from the database that the user no longer wants to save
+function deleteSavedEvent(id, custEmail) {
     $.ajax(`/api/customer/${id}`, {
         type: "DELETE"
     }).then(function (response) {
-        console.log(`back from delete`);
+        console.log(`back from delete`, response, custEmail);
         // reload page with theaters available and saved/purchased events
-        let prepend = false;
-        renderCustInfo(response, prepend);
+        getCustomerInfo(custEmail);
     })
         .catch(function (error) {
             console.log(`error getting customer info ${error}`);
         });
+ 
+}
+//this function will update the database if a user wants to purchase a saved item
+function purchaseEvent(id, custEmail) {
+    $.ajax(`/api/customer/${id}`, {
+        type: "UPDATE"
+    }).then(function (response) {
+        console.log(`back from delete`, response, custEmail);
+        // reload page with theaters available and saved/purchased events
+        getCustomerInfo(custEmail);
+    })
+        .catch(function (error) {
+            console.log(`error getting customer info ${error}`);
+        });
+  
 
 }
