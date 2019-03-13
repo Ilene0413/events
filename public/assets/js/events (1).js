@@ -129,11 +129,12 @@ $(document).ready(function () {
 
         console.log(`in delete button`);
         //get customer id
-        let id = $(this).attr("value");
+        let id= $(this).attr("value");
 
         console.log(`id ${id}`);
         deleteSavedEvent(id);
     });
+
 });
 
 //this function validates the user information that was entered
@@ -164,84 +165,37 @@ function eventsPage(customerData) {
 
 function renderEventsPage(eventInfo, customerData) {
     // start by formatting table and column with events
-    // let eventDiv = `
-    //     <table class="table">
-    //         <thead>
-    //             <tr>
-    //                 <th scope="col">Event</th>
-    //                 <th scope="col">Select Events</th>
-    //                 <th scope="col">Saved Events</th>
-    //             </tr>
-    //         </thead>
-    //         <tbody>
-    //             <tr>
-    //     `;
-
-    // let eventClose = `</tr></tbody></table>`;
-    // let eventData = `<td><div id="eventData">`;
-    // if (eventInfo.length > 0) {
-    //     for (let i = 0; i < eventInfo.length; i++) {
-    //         let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
-    //         let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
-    //         let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
-    //         eventData += event + eventPicture + description
-    //     };
-
-    //     eventData += '</div></td>';
-    //     eventDiv += eventData;
-    // };
     let eventDiv = `
-    <div >
-    <ul class="list-group">
-    `;
-    let eventClose = '</ul>'
-    let panes = `<div><div id="p-frame" class="tab-content">`
-    let eventData = '<li class="list-group-item list-group-flush" role="tablist">'
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Event</th>
+                    <th scope="col">Select Events</th>
+                    <th scope="col">Saved Events</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+        `;
+
+    let eventClose = `</tr></tbody></table>`;
+    let eventData = `<td><div id="eventData">`;
     if (eventInfo.length > 0) {
-
-        let bottle = '<div class="d-flex w-100 justify-content-between">'
-        let bottlecap = '</div>'
-        let closer = '</a>'
         for (let i = 0; i < eventInfo.length; i++) {
-
-            let opener = `<a  
-            class="list-group-item list-group-item-action flex-column align-items-start" 
-            id="list-${[eventInfo[i].event.EventId]}-list"
-            data-toggle="list"
-            href="#list-${[eventInfo[i].event.EventId]}"
-            role="tab"
-            aria-controls="${[eventInfo[i].event.EventId]}" 
-            data-anijs="if: click, do: $toggleClass invisible">`
-
-            let event = `<h5 class="mb-1 showTitle">${eventInfo[i].event.Name}</h5>`;
-
-            let eId = `<h5 class="badge badge-info badge-pill">${[eventInfo[i].event.EventId]}</h5>`
-
-            let poster = eventInfo[i].event.MainImageUrl
-
-            let eventPicture = `<img src="${poster}" height="250" value="${eventInfo[i].event.EventId}">`;
-
-            let description = `<p> ${eventInfo[i].event.TagLine}</p> <br>`;
-
-            let paneTab = `<div 
-            class="tab-pane fade" 
-            id="list-${[eventInfo[i].event.EventId]}" 
-            role="tabpanel" 
-            aria-labelledby="list-${[eventInfo[i].event.EventId]}-list">
-            <small>${eventInfo[i].event.Description}</small>
-            </div>`
-
-            eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
-            panes += paneTab
+            let event = `<h2> ${[eventInfo[i].event.EventId]}.   ${eventInfo[i].event.Name}</h2> <br>`;
+            let description = `<p> ${eventInfo[i].event.Description}</p> <br>`;
+            let eventPicture = `<img src="${eventInfo[i].event.MainImageUrl}">`;
+            eventData += event + eventPicture + description
         };
-        panes += closer +bottlecap
-        eventData += '</li>'
+
+        eventData += '</div></td>';
         eventDiv += eventData;
     };
-    eventDiv += eventClose;
+
     //format column 2
 
     let col2Div = `
+        <td>
             <div>
                 <form name="customerForm">
                     <div class="form-group">
@@ -267,36 +221,16 @@ function renderEventsPage(eventInfo, customerData) {
                     </div>
                 </form>
             </div>
+        </td>
+        <td id="customerInfo"></td>
         `;
-    //eventDiv += col2Div + eventClose;
-
-    let pageHead = `
-        <div class="jumbotron">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6" id="showListingsParent">
-                        <div id="showListings"></div>
-                    </div>
-                    <div class="col-4" id="userWindowParent">
-                        <div id="userWindow"></div>
-                    </div>
-                    <div class="col-2" id="customerInfoParent">
-                        <div id="customerInfo" class="col-2"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      `;
-
+    eventDiv += col2Div + eventClose;
     $(".rowSignin").empty();
     $(".rowCarousel").empty();
-    $("#eventInfo").html(pageHead);
-    $("#userWindow").append(col2Div);
-    $("#userWindow").append(panes);
-    $("#showListings").append(eventDiv);
+    $("#eventInfo").html(eventDiv);
+
 
     //this function will load the events a user has already saved or purchased 
-
     $.ajax(`/api/customer/${customerData.email}`, {
         type: "GET",
         data: customerData
@@ -304,41 +238,47 @@ function renderEventsPage(eventInfo, customerData) {
         // reload page with theaters available and saved/purchased events
         let prepend = false;
         renderCustInfo(response, prepend);
-    }).catch(function (error) {
-        console.log(`error getting customer info ${error}`);
-    });
+    })
+        .catch(function (error) {
+            console.log(`error getting customer info ${error}`);
+        });
 
-    $("#userWindow, #customerInfo, #p-frame").stick_in_parent({recalc_every: 1});
 }
 
 function renderCustInfo(customerInfo, prepend) {
     let customerDiv = `<div id="saved-purchased">`;
     // check that the customer has saved or purchased events
-    let venueName, eventName, eventDate;
+    let sp, venueName, eventName, eventDate, numPeople, customerButton;
     if (customerInfo.length > 0) {
-        let cardtop = '<div class="card" style="width: 150px;"><div class="card-body">'
-
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
-                let sp = `<small>Saved</small>`;
-                let numPeople = "";
+                sp = `<p>Saved</p>`;
+                console.log(`customer id ${customerInfo[i].id}`);
+                console.log(`customer id ${customerInfo[i].email}`);
+
+                numPeople = "";
+                customerButton = `<button class="btn btn-md btn-info" id="purchasedBtn" value="${customerInfo[i].id}">Purchase</button> 
+                <button class="btn btn-md btn-info" id="deletedButton" value="${customerInfo[i].id}">Delete</button>`;
+
+                // deleteButton = `<button class="btn btn-md btn-info" id="deletedBtn">Delete</button>`;
+                // purchaseButton = `<button class="btn btn-md btn-info" id="purchased">Purchase</button>`;
+                // customerButton = deleteButton + purchaseButton;
             }
             else {
-                let = sp = `<small>Purchased</small>`;
-                numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Tickets</small><br>`;
-
+                sp = sp = `<p>Purchased</p>`;
+                numPeople = `<p>${customerInfo[i].numPurchased} People</p>`;
+                customerButton = "";
             };
-            eventName = `<h5 class="card-title">${customerInfo[i].eventName}</h5>`;
-            venueName = `<small>${customerInfo[i].venueName}</small>`;
-            eventDate = `<h6 class="card-subtitle mb-2 text-muted">${moment(customerInfo[i].eventDate).format("LL")}</h6>`;
-
-            customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
+            eventName = `<p>${customerInfo[i].eventName}</p>`;
+            venueName = `<p>${customerInfo[i].venueName}</p>`;
+            eventDate = `<p>${moment(customerInfo[i].eventDate).format("LL")}</p>`;
+            customerDiv += sp + eventName + venueName + eventDate + numPeople + customerButton;
         };
         customerDiv += '</div>';
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-        $("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
+        $("#saved-purchased").prepend(eventName + eventDate + numPeople + sp);
         $("#datepicker").val("");
         $("#eventNum").val("");
         $("#people").val(" ");
@@ -421,5 +361,5 @@ function deleteSavedEvent(id) {
         .catch(function (error) {
             console.log(`error getting customer info ${error}`);
         });
-
+  
 }
