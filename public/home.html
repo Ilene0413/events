@@ -29,7 +29,7 @@
         <!--removed row stuff so it would flow better-->
     </nav>
     <div class="jumbotron">
-        <div class="containter">
+        <div class="containter" id="merryGoRound">
             <img id="curtain" src="assets/img/curtain.png">
 
             <div class="rowCarousel">
@@ -82,14 +82,17 @@
                             <!--took away label, used placeholder-->
                         </div>
                         <div class="col-md-2 offset-2">
-                            <input id="search" type="submit" class="btn btn-lg btn-primary">
+                            <input id="search" type="submit" class="btn btn-lg btn-primary"
+                                data-anijs="if: click, do: fadeOut animated, to: .rowSignin">
                         </div>
                     </form>
                 </div>
             </div>
             <div class="row" id="eventInfo"></div>
-
         </div>
+        <!-- <div class="footer">London Theaters Plus™ 2019</div> -->
+        <!--removed row stuff so it would flow better-->
+
     </div>
 
     <!--      <div class="footer">London Theaters Plus™ 2019</div>-->
