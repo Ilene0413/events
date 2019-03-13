@@ -7,6 +7,8 @@
 var axios = require("axios");
 var api_key = "s9c04c83kvavxsruk7iy25wm";
 
+const eventLimit = 50;
+
 function formulateResponse(events, venues) {
   var resArr = [];
   for (var i = 0; i < events.length; i++) {
@@ -45,6 +47,19 @@ function filterEventsByDate(date, events) {
   return newEventArr;
 }
 
+function limitEventsResults(numEvents, events) {
+  var newEventArr = [];
+  if (numEvents >= events.length) {
+    return events;
+  }
+  
+  for (var i=0; i<numEvents; i++) {
+    newEventArr.push(events[i]);
+  }
+
+  return newEventArr;
+}
+
 // Routes
 // =============================================================
 module.exports = function (app) {
@@ -65,7 +80,9 @@ module.exports = function (app) {
           })
           .then(function (venueResponse) {
             console.log("total venue = " + venueResponse.data.Venues.length);
-            var responseArray = formulateResponse(eventResponse.data.Events, venueResponse.data.Venues);
+            var newEventArr = limitEventsResults(eventLimit, eventResponse.data.Events);
+            console.log("get filtered event list length = " + newEventArr.length);
+            var responseArray = formulateResponse(newEventArr, venueResponse.data.Venues);
             res.json(responseArray);
             //res.render("name of html file", responseArray);
           })
@@ -200,9 +217,9 @@ module.exports = function (app) {
 
   // Get route for retrieving details of a single venue
 
-  app.get("/api/event/:VenueId", function (req, res) {
-    console.log("get: venueId: " + req.params.VenueId);
-    var URL = "https://api.londontheatredirect.com/rest/v2/Venues/" + req.params.VenueId;
+  app.get("/api/event/venue/:venueId", function (req, res) {
+    console.log("get: venueId: " + req.params.venueId);
+    var URL = "https://api.londontheatredirect.com/rest/v2/Venues/" + req.params.venueId;
 
     axios
       .get(URL, {

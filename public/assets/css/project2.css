@@ -6,8 +6,39 @@
     border: solid;
   }
 
+
+.carousel {
+    position: relative;
+    z-index: 5;
+}
+
+.carousel{
+    position: relative;
+    height: 500px;
+    top: -15px;
+    
+}
+
+#curtain {
+    position: absolute;
+    z-index: 7 !important;
+    top: -0px;
+    left: 0px;
+    width: 1483px;
+    height: 736px;
+    
+}
+
+
+.jumbotron {
+    position: relative;
+    z-index: 8;
+    
+}
+
+
 #curtains {
-    z-index: 10;
+    z-index: 5 !important;
 }
 
 #email {
@@ -15,13 +46,13 @@
     border-bottom-right-radius: 100px;
 }
 
-.input-group-text {
-    border-radius: 100px;
+.rowSignin { 
+    position: relative;
+    z-index: 10px !important;
 }
 
-.jumbotron {
-    margin-top: -20px;
-    background-color: white;
+.input-group-text {
+    border-radius: 100px;
 }
 
 #first {
@@ -32,7 +63,7 @@
 .footer {
     position: absolute;
     left: 0;
-    bottom: -1;
+    bottom: -0;
     right: 0;
     background-color: rgb(244, 247, 242);
     color: rgb(94, 180, 127);
@@ -43,6 +74,7 @@
 h6 {
     color: rgb(94, 180, 127);
 }
+
 
 #last {
     border-top-right-radius: 100px;
@@ -75,6 +107,17 @@ h6 {
 
 .rowSignin {
     margin-top: 50px;
+    z-index: 10;
+    bottom: 50px;
+}
+
+#save {
+    margin: 15px;
+    border-radius: 100px;
+}
+
+#saved {
+    text-align: center;
 }
 
 #save {
@@ -93,6 +136,43 @@ h6 {
 
 #search {
     border-radius: 100px;
+}
+
+#newpic {
+    background-image: url("../img/theatre4.jp");
+}
+
+td {
+    max-width: 100px;
+}
+
+.theaterinfo {
+  
+}
+
+#th1 {
+    width: 600px;
+    border-right: solid;
+    border-left: solid;
+    text-align: center;
+    color: rgb(94, 180, 127);
+}
+
+#th2 {
+    width: 500px;
+    border-right: solid;
+    border-left: solid;
+    text-align: center;
+    color: rgb(94, 180, 127);
+}
+
+#th3 {
+    width: 300px;
+    border-right: solid;
+    border-left: solid;
+    text-align: center;
+    color: rgb(94, 180, 127);
+
 }
 
 #theatre {
