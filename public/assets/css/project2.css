@@ -73,6 +73,10 @@
     line-height: 60px;
 }
 
+h1 {
+    font-size: 100px;
+}
+
 h6 {
     color: rgb(94, 180, 127);
 }
@@ -141,7 +145,7 @@ h6 {
 }
 
 #newpic {
-    background-image: url("../img/theatre4.jpg");
+    /* background-image: url("../img/theatre4.jpg"); */
     background-repeat: no-repeat;
     min-height: 730px;
     z-index: 5;

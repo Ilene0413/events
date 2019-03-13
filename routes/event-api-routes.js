@@ -5,7 +5,9 @@
 // Dependencies
 // =============================================================
 var axios = require("axios");
-var api_key = "s9c04c83kvavxsruk7iy25wm";
+require("dotenv").config();
+
+var api_key = process.env.LTD_API_KEY;
 
 const eventLimit = 50;
 
