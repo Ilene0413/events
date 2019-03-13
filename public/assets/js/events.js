@@ -307,7 +307,7 @@ function renderEventsPage(eventInfo, customerData) {
       `;
 
     $(".rowSignin").empty();
-    $(".rowCarousel").empty();
+    $("#merryGoRound").empty();
 
     //$("#eventInfo").html(eventDiv);
     getCustomerInfo(customerData.email);
@@ -318,7 +318,6 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
     $("#userWindow, #customerInfo, #p-frame").stick_in_parent({recalc_every: 1});
-
 
 }
     //this function will load the events a user has already saved or purchased 
@@ -337,6 +336,7 @@ function getCustomerInfo(custEmail) {
     }).catch(function (error) {
         console.log(`error getting customer info ${error}`);
     });
+
 
 }
 //This function renders the customers saved and purchased items
