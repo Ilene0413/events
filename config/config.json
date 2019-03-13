@@ -9,7 +9,7 @@
   },
   "test": {
     "username": "root",
-    "password": "root",
+    "password": "testroot",
     "database": "events_db",
     "host": "127.0.0.1",
     "port": 3306,
