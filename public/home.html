@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
             <meta charset="utf-8">
-        <title>Project2 Skeleton</title>
+        <title>venues</title>
         <link rel="stylesheet" type="text/css" href="assets/css/project2.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -15,7 +15,7 @@
     <body>
             
             <nav class="navbar">
-                    <a class="navbar-brand navbar" href="/"><h2>Events</h2></a> <!--removed row stuff so it would flow better-->
+                    <a class="navbar-brand navbar" href="/"><h2>London Theaters Plus</h2></a> <!--removed row stuff so it would flow better-->
                 </nav>
         <div class="jumbotron">
                 <div class="containter"> 
@@ -70,12 +70,17 @@
                     </div>
                 </div>
                
-                <div class="footer">Events™ 2019</div> <!--removed row stuff so it would flow better-->
+                <div class="footer">London Theaters Plus™ 2019</div> <!--removed row stuff so it would flow better-->
             </div>
         
 
             <script src="assets/js/events.js"> </script><!--changed to events.js-->
-            
+            <script>
+                    $('#datepicker').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+            </script>
+
 
     </body>
 </html>

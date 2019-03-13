@@ -1,11 +1,11 @@
 
-
 .carousel-innerimg {
     width: 500px;
     height: 506px;
     border-radius: 20px;
     border: solid;
   }
+
 
 .carousel {
     position: relative;
@@ -55,23 +55,21 @@
     border-radius: 100px;
 }
 
-
-
-
 #first {
     border-top-right-radius: 100px;
     border-bottom-right-radius: 100px;
 }
 
 .footer {
-    position: absolute;
+    position: relative;
     left: 0;
-    bottom: -0;
+    bottom: 0;
     right: 0;
     background-color: rgb(244, 247, 242);
     color: rgb(94, 180, 127);
     text-align: center;
     padding: 1rem;
+    z-index: 10;
 }
 
 h6 {
@@ -123,6 +121,15 @@ h6 {
     text-align: center;
 }
 
+#save {
+    margin: 15px;
+    border-radius: 100px;
+}
+
+#saved {
+    text-align: center;
+}
+
 #selected {
     border-right: solid;
     text-align: center;
@@ -133,7 +140,10 @@ h6 {
 }
 
 #newpic {
-    background-image: url("../img/theatre4.jp");
+    background-image: url("../img/theatre4.jpg");
+    background-repeat: no-repeat;
+    min-height: 730px;
+    z-index: 5;
 }
 
 td {
@@ -166,6 +176,7 @@ td {
     border-left: solid;
     text-align: center;
     color: rgb(94, 180, 127);
+
 }
 
 #theatre {
