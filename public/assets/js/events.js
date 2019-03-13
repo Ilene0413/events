@@ -68,7 +68,8 @@ $(document).ready(function () {
             venueId: 1,
             venueName: "",
             eventDate: moment(formatEventDate).format(),
-            eventId: $("#eventNum").val(),
+           // eventId: $("#eventNum").val(),
+            eventId: $(".show").attr( "id").substring(5),
             eventName: "",
             saved: true,
             purchased: false,
@@ -119,7 +120,8 @@ $(document).ready(function () {
             venueId: 0,
             venueName: "",
             eventDate: moment(formatEventDate).format(),
-            eventId: $("#eventNum").val(),
+           // eventId: $("#eventNum").val(),
+            eventId: $(".show").attr( "id").substring(5),
             eventName: "",
             saved: false,
             purchased: true,
@@ -145,7 +147,7 @@ $(document).ready(function () {
     $("#eventInfo").on("click", "#purchasedBtn", function (event) {
         event.preventDefault();
 
-        console.log(`in delete button`);
+        console.log(`in purchase button`);
         //get customer id
         let id = $(this).attr("value");
         let custEmail = $(this).attr("custEmail");
@@ -208,6 +210,7 @@ function renderEventsPage(eventInfo, customerData) {
     //     eventData += '</div></td>';
     //     eventDiv += eventData;
     // };
+    
     let eventDiv = `
     <div >
     <ul class="list-group">
@@ -233,7 +236,7 @@ function renderEventsPage(eventInfo, customerData) {
 
             let event = `<h5 class="mb-1 showTitle">${eventInfo[i].event.Name}</h5>`;
 
-            let eId = `<h5 class="badge badge-info badge-pill">${[eventInfo[i].event.EventId]}</h5>`
+            //let eId = `<h5 class="mb-1 badge badge-info badge-pill">${[eventInfo[i].event.EventId]}</h5>`
 
             let poster = eventInfo[i].event.MainImageUrl
 
@@ -249,7 +252,8 @@ function renderEventsPage(eventInfo, customerData) {
             <small>${eventInfo[i].event.Description}</small>
             </div>`
 
-            eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
+            //eventData += opener + bottle + event + eId + bottlecap + eventPicture + closer + description
+            eventData += opener + bottle + event + bottlecap + eventPicture + closer + description
             panes += paneTab
         };
         panes += closer + bottlecap
@@ -259,13 +263,14 @@ function renderEventsPage(eventInfo, customerData) {
     eventDiv += eventClose;
     //format column 2
 
+                        // pulled from col2Div, kept in case we want or need the typable event back.
+                        // <input id="eventNum" placeholder="Enter event number" type="number" min="1">
+                        // <div id="errorMsg">${state.msg}</div>
+                        // <br></br>
     let col2Div = `
             <div>
                 <form name="customerForm">
                     <div class="form-group">
-                        <input id="eventNum" placeholder="Enter event number" type="number" min="1">
-                        <div id="errorMsg">${state.msg}</div>
-                        <br>
                         <select class="form-control" id="people">
                             <option value=" "># of people</option>
                             <option value="1">1</option>
@@ -317,7 +322,7 @@ function renderEventsPage(eventInfo, customerData) {
     $("#userWindow").append(col2Div);
     $("#userWindow").append(panes);
     $("#showListings").append(eventDiv);
-    $("#userWindow, #customerInfo, #p-frame").stick_in_parent({ recalc_every: 1 });
+    $("#showListings, #userWindow, #customerInfo, #p-frame").stick_in_parent();
 
 }
 //this function will load the events a user has already saved or purchased 
@@ -344,17 +349,15 @@ function getCustomerInfo(custEmail) {
 function renderCustInfo(customerInfo, prepend) {
     let customerDiv = `<div id="saved-purchased">`;
     // check that the customer has saved or purchased events
+    console.log(customerInfo)
     let sp, venueName, eventName, eventDate, numPeople, customerButton;
     if (customerInfo.length > 0) {
-        let cardtop = '<div class="card" style="width: 150px;"><div class="card-body">'
+        let cardtop = '<div class="card" style="width: 180px;"><div class="card-body">'
 
         for (let i = 0; i < customerInfo.length; i++) {
             if (customerInfo[i].saved) {
 
-
-                //             customerDiv += cardtop + eventName + eventDate + numPeople + sp + venueName + `</div></div>`;
-
-                sp = `<small>Saved</small>`;
+                sp = `<small>Saved </small>`;
                 console.log(`customer id ${customerInfo[i].id}`);
                 console.log(`customer id ${customerInfo[i].email}`);
 
@@ -364,7 +367,7 @@ function renderCustInfo(customerInfo, prepend) {
 
             }
             else {
-                sp = sp = `<small>Purchased</small>`;
+                sp = sp = `<small>Purchased </small>`;
                 if (customerInfo[i].numPurchased < 2) {
                     numPeople = `<small class="card-text">${customerInfo[i].numPurchased} Ticket</small><br>`;
                 }else{
@@ -382,7 +385,7 @@ function renderCustInfo(customerInfo, prepend) {
     };
     if (prepend) {
         console.log(`venue ${venueName}, eventDate ${eventDate}`);
-        let cardtop = '<div class="card" style="width: 150px;"><div class="card-body">'
+        let cardtop = '<div class="card" style="width: 180px;"><div class="card-body">'
         //JohnM
         //$("#saved-purchased").prepend(cardtop + eventName + eventDate + numPeople + sp + `</div></div>`);
 
@@ -430,11 +433,12 @@ function postFavorite(customerEvent) {
 
         });
 }
+
 // This function posts data to the database
 function postData(customerEvent) {
     console.log(`in post favorites ${customerEvent.eventName}`);
     // Send the POST request.
-
+    console.log(customerEvent)
     // clear out error messages 
     $("#dateError").empty();
     $("#peopleError").empty();
@@ -474,7 +478,7 @@ function purchaseEvent(id, custEmail) {
     $.ajax(`/api/customer/${id}`, {
         type: "UPDATE"
     }).then(function (response) {
-        console.log(`back from delete`, response, custEmail);
+        console.log(`purcahese`, response, custEmail);
         // reload page with theaters available and saved/purchased events
         getCustomerInfo(custEmail);
     })
