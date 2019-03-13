@@ -1,11 +1,52 @@
+@font-face {
+    font-family: Tickets;
+    src: url(../fonts/Rialto.ttf);
+}
+
+@font-face {
+    font-family: Title;
+    src: url(../fonts/WagnerZip-Change.ttf);
+}
+
+@font-face {
+    font-family: Description;
+    src: url(../fonts/Montserrat-Regular.ttf);
+}
+
+#showListingsParent {
+    height: auto;
+}
+
+#showListings {
+    font-family: Description;
+}
+
+.showTitle {
+    font-family: Title;
+}
+
+#userWindowParent {
+    height: auto;
+}
+
+#userWindow {
+    font-family: Description;
+}
+
+#customerInfoParent {
+    height: auto;
+}
+
+#customerInfo{
+    font-family: Tickets;
+}
 
 .carousel-innerimg {
     width: 500px;
     height: 506px;
     border-radius: 20px;
     border: solid;
-  }
-
+}
 
 .carousel {
     position: relative;
