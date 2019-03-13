@@ -26,7 +26,6 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
     "path": "^0.12.7",
-    "sequelize": "^4.43.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
