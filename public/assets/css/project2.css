@@ -181,7 +181,7 @@ h6 {
 }
 
 #newpic {
-    background-image: url("../img/theatre4.jpg");
+    /* background-image: url("../img/theatre4.jpg"); */
     background-repeat: no-repeat;
     min-height: 730px;
     z-index: 5;
