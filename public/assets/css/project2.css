@@ -1,44 +1,6 @@
-@font-face {
-    font-family: Tickets;
-    src: url(../fonts/Rialto.ttf);
-}
 
-@font-face {
-    font-family: Title;
-    src: url(../fonts/WagnerZip-Change.ttf);
-}
-
-@font-face {
-    font-family: Description;
-    src: url(../fonts/Montserrat-Regular.ttf);
-}
-
-#showListingsParent {
-    height: auto;
-}
-
-#showListings {
-    font-family: Description;
-}
-
-.showTitle {
-    font-family: Title;
-}
-
-#userWindowParent {
-    height: auto;
-}
-
-#userWindow {
-    font-family: Description;
-}
-
-#customerInfoParent {
-    height: auto;
-}
-
-#customerInfo{
-    font-family: Tickets;
+.body {
+    max-height: 700px;
 }
 
 .carousel-innerimg {
@@ -46,7 +8,8 @@
     height: 506px;
     border-radius: 20px;
     border: solid;
-}
+  }
+
 
 .carousel {
     position: relative;
@@ -102,15 +65,20 @@
 }
 
 .footer {
-    position: relative;
+    position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -1;
     right: 0;
     background-color: rgb(244, 247, 242);
     color: rgb(94, 180, 127);
     text-align: center;
-    padding: 1rem;
+  
     z-index: 10;
+    line-height: 60px;
+}
+
+#header {
+    font-size: 50px;
 }
 
 h6 {
@@ -181,7 +149,7 @@ h6 {
 }
 
 #newpic {
-    /* background-image: url("../img/theatre4.jpg"); */
+    background-color: rgb(230, 141, 141);
     background-repeat: no-repeat;
     min-height: 730px;
     z-index: 5;
