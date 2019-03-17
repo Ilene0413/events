@@ -15,6 +15,7 @@
     LTD (London Theatre District) API
     Sticky-Kit
 
+**https://nameless-everglades-50094.herokuapp.com/ 
 **Signing into account**
 The app asks for the user's first name, last name, and email address
 It then checks the database to see if the user has any saved or purchased events and then takes the user to the events page
